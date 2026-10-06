@@ -36,6 +36,7 @@
 
   --header-bg{ --header-bg: 40, 8, 10; };
 }
+body[data-empire="ottoman"]       { --header-bg: 40, 8, 10; }
 body[data-empire="roman"]       { --header-bg: 44, 10, 10; }
 body[data-empire="carthaginian"]{ --header-bg: 30, 16, 44; }
 body[data-empire="egyptian"]    { --header-bg: 10, 20, 40; }
@@ -49,35 +50,17 @@ html {
   font-size: clamp(14px, 0.98vw, 24px);
 }
 
-header {
-    position: relative;
-  background: linear-gradient(
-    to bottom,
-    rgba(var(--header-bg), 0.92),
-    rgba(var(--header-bg), 0.85) 70%,
-    rgba(var(--header-bg), 0)
-  );
-  backdrop-filter: blur(4px);
-  border-bottom: 1px solid var(--gold, #c9a227);
-}
+body { margin: 0; }              /* removes the 8px gap on the sides */
 
 header {
-  position: relative;
-  isolation: isolate;
-}
-
-header::before {
-  content: "";
-  position: absolute;
-  inset: 0 -3rem;            /* cancels the 3rem side margins */
-  z-index: -1;
-  background: linear-gradient(
-    to bottom,
-    rgba(var(--header-bg), 0.92),
-    rgba(var(--header-bg), 0.85) 70%,
-    rgba(var(--header-bg), 0)
-  );
-  backdrop-filter: blur(4px);
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  align-items: center;
+  gap: 15rem;
+  margin: 0;                          /* was 0 3rem */
+  padding: 1rem 4rem;                 /* old 3rem margin + 1rem padding */
+  background: rgba(var(--header-bg), 0.3);
+  border-bottom: 1px solid var(--accent);
 }
 
 @font-face {
@@ -100,16 +83,6 @@ body {
     background-image: var(--bg-page);
     background-repeat: no-repeat;
     background-size: cover;
-}
-
-header{
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    padding: 1rem 1rem;
-    margin: 0 3rem;
-    border-bottom: 1px solid var(--edge);
-    align-items: center;
-    gap: 15rem;
 }
 
 .logo{
