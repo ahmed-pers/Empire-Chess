@@ -33,7 +33,13 @@
   --edge: #481B1B;
   --glow: rgba(180, 30, 30, 0.45);
   --overlay-bg: radial-gradient(circle at center, #3a1212 0%, #140606 55%, #000 100%);
+
+  --header-bg{ --header-bg: 40, 8, 10; };
 }
+body[data-empire="roman"]       { --header-bg: 44, 10, 10; }
+body[data-empire="carthaginian"]{ --header-bg: 30, 16, 44; }
+body[data-empire="egyptian"]    { --header-bg: 10, 20, 40; }
+body[data-empire="iberian"]     { --header-bg: 28, 18, 8; }
 
 *{
     box-sizing: border-box;
@@ -41,6 +47,18 @@
 
 html {
   font-size: clamp(14px, 0.98vw, 24px);
+}
+
+header {
+    position: relative;
+  background: linear-gradient(
+    to bottom,
+    rgba(var(--header-bg), 0.92),
+    rgba(var(--header-bg), 0.85) 70%,
+    rgba(var(--header-bg), 0)
+  );
+  backdrop-filter: blur(4px);
+  border-bottom: 1px solid var(--gold, #c9a227);
 }
 
 @font-face {
