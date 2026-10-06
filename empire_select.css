@@ -1,0 +1,472 @@
+:root {
+  --gold: #d4a85a;
+  --gold-bright: #DCBB68;
+  --crimson: #481B1B;
+
+  /* ---------- Theme images (default theme: Ottoman vs Carthage) ---------- */
+  --bg-page:            url("assets/images/backgrounds/ottoman-background.jpg");
+  --bg-move-history:    url("assets/images/backgrounds/move-history-bg.png");
+
+  --bg-player-card:     url("assets/images/backgrounds/playercard-bg-turkey.png");
+  --bg-opponent-card:   url("assets/images/backgrounds/playercard-bg-carthage.png");
+  --bg-player-name:     url("assets/images/backgrounds/namecard-bg-turkey.png");
+  --bg-opponent-name:   url("assets/images/backgrounds/namecard-bg-carthage.png");
+  --bg-infobox:         url("assets/images/backgrounds/info-box-bg-.png");
+
+  --icon-home:          url("assets/images/icons/empire.png");
+  --icon-empire:        url("assets/images/icons/empire.png");
+  --icon-puzzles:       url("assets/images/icons/puzzles.png");
+  --icon-stats:         url("assets/images/icons/stats.png");
+  --icon-draw:          url("assets/images/icons/draw.png");
+  --icon-resign:        url("assets/images/icons/btn-flag.png");
+
+  --card-gap: 2px;
+  --panel-gap: 0.5rem;
+  --gold: #c9a24b;
+  --pannel-banner-bg:  url("assets/images/backgrounds/panel-banner-bg.png");
+
+  --empire-info: "info";
+
+  --bg-empire-preview: url("assets/images/backgrounds/ottoman-preview.jpg");
+  --accent: #d4a85a;
+  --accent-bright: #DCBB68;
+  --edge: #481B1B;
+  --glow: rgba(180, 30, 30, 0.45);
+  --overlay-bg: radial-gradient(circle at center, #3a1212 0%, #140606 55%, #000 100%);
+}
+
+*{
+    box-sizing: border-box;
+}
+
+html {
+  font-size: clamp(14px, 0.98vw, 24px);
+}
+
+@font-face {
+    font-family: "sora";
+    src: url("assets/fonts/Sora-VariableFont_wght.ttf") format("truetype");
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+.panel-banner h1,
+.panel-banner h2,
+.panel-banner p{
+    margin: 0;
+}
+
+body {
+    font-family: "sora", sans-serif;
+    background-color: #0b0b0b;
+    background-image: var(--bg-page);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+header{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    padding: 1rem 1rem;
+    margin: 0 3rem;
+    border-bottom: 1px solid var(--edge);
+    align-items: center;
+    gap: 15rem;
+}
+
+.logo{
+    justify-self: start;
+}
+
+.logo img{
+    width: 11.25rem;
+}
+
+.header-buttons{
+    display: flex;
+    justify-content: center;
+    gap: 1.25rem;
+    align-items: center;
+    transform: translateY(0.5rem);
+}
+
+.header-buttons p{
+    color: var(--accent-bright);
+}
+
+.button p{
+    margin: 0.5rem 0 0;
+    color: var(--accent-bright);
+    transition: color .3s;
+}
+.button:hover p{ color: #f5d589; }
+
+.button{
+    display: flex;
+    position: relative; 
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    color: var(--accent);
+    text-decoration: none;
+    isolation: isolate;
+}
+
+.button::before{
+  content: "";
+  position: absolute; inset: 0;
+  background: radial-gradient(circle at 50% 40%, var(--glow), transparent 70%);
+  opacity: 0;
+  transition: opacity .35s;
+  z-index: -1;
+  height: 120%;
+}
+.button:hover::before {
+    opacity: 1;
+
+}
+.button:hover p,
+.button.clicked p{
+    text-decoration-line: underline;
+    text-decoration-color: var(--accent-bright); /* Blue underline */
+    text-decoration-style: solid;     /* solid, double, dotted, dashed, wavy */
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.375rem;
+}
+.button.clicked::before { opacity: 1; }
+
+.button button{
+    cursor: inherit;
+}
+
+.empire-button, .puzzle-button, .stats-button, .home-button{
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: transparent;
+    width: 1.875rem;
+    height: 1.875rem;
+    border: none;
+}
+.home-button   { background-image: var(--icon-home); }
+.empire-button { background-image: var(--icon-empire); }
+.puzzle-button { background-image: var(--icon-puzzles); }
+.stats-button  { background-image: var(--icon-stats); }
+
+.profile {
+  justify-self: end;
+  display: flex;
+  align-items: center;
+  gap: 0.3125rem;
+}
+
+.profile span{
+    display: flex;
+    flex-direction: column;
+    gap: 0.3125rem;
+    color: white;
+    font-size: 0.75rem;
+}
+
+.profile span p{
+    margin: 0;
+}
+
+main{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10rem;
+    width: 90vw;
+    margin: 0 auto;
+    padding: 1.5rem 0;
+}
+
+.player-panel{
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    height: calc(100vh - 160px);
+    width: 32rem;
+    margin-top: 2rem;
+}
+
+.panel-banner{
+    text-align: center;
+    padding: 0.625rem;
+    color: var(--gold-bright);
+    background-image: var(--pannel-banner-bg);
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: auto;
+    margin: 2px 0 -1px;
+}
+
+.empire-grid{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--card-gap);
+}
+
+.empire-card{
+    aspect-ratio: 1 / 0.77;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url("assets/images/backgrounds/empire-card-bg.png");
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    cursor: pointer;
+    border-radius: 0.5rem;
+    transition: transform .15s, box-shadow .15s;
+    flex-direction: column;
+    gap: 0.625rem;
+}
+
+.empire-card:hover,
+.empire-card.selected{
+    border: 3px solid #f5d589;
+}
+
+.empire-card.empty {
+    background-color: #41382E;
+    background-image: none;
+    border: 3px dashed var(--gold);
+    color: var(--gold);
+    text-align: center;
+}
+
+.status {
+  margin: 0;
+  color: white;
+  padding: 0.625rem;
+}
+
+.info-box {
+  min-height: 5.625rem;
+  background-image: var(--bg-infobox);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-position: center;
+  padding: 0.7em;
+
+  color: #ffffff; /* Or a light gold/yellow like #f3e5ab to match the border */
+  font-size: 1rem;
+  font-family: inherit; /* Keeps it consistent with your UI */
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8); /* Optional: adds contrast against the background */
+}
+
+.start-wrap {
+  align-self: end;
+  margin-bottom: 2rem;
+  align-self: end;
+  justify-self: end;
+}
+
+.start-btn {
+  /* Layout & Spacing */
+  padding: 0.9rem 2.5rem;
+  font-family: inherit;
+  font-size: 1.2rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  cursor: pointer;
+
+  /* Theme Colors (matching a classic gold/dark strategy UI) */
+  color: var(--accent-bright); /* themed text */
+  background: linear-gradient(to bottom, rgba(70, 52, 26, 0.96), rgba(26, 19, 10, 0.96)); /* solid enough to read over the photo */
+  border: 2px solid var(--accent); /* themed border */
+  border-radius: 4px;
+  box-shadow: 0 0 1.25rem var(--glow), 0 4px 10px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
+
+  /* Smooth Transitions */
+  transition: all 0.2s ease-in-out;
+}
+
+.start-btn:not(:disabled):hover {
+  background: linear-gradient(to bottom, #3d321f, #1f180f);
+  border-color: #f3e5ab;
+  color: #ffffff;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.6), 0 0 10px rgba(197, 160, 89, 0.4);
+  transform: translateY(-2px);
+}
+
+/* Active/Click state */
+.start-btn:not(:disabled):active {
+  transform: translateY(1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+.start-btn:disabled {
+  background: #1a1610;
+  color: #6c6352;
+  border-color: #4a3d28;
+  cursor: not-allowed;
+  opacity: 0.6;
+  box-shadow: none;
+  transform: none;
+}
+
+.empire-card[data-empire="carthaginian"] { --select-emblem: url(assets/images/avatars/avatar-carthage.png); --empire-info:"Either i find the way or make one... Special ability:"}
+.empire-card[data-empire="ottoman"]      { --select-emblem: url(assets/images/avatars/avatar-sultan.png); --empire-info:"Constantinople, either i conquer you, or you conquer me... Special ability:"}
+.empire-card[data-empire="roman"]      { --select-emblem: url(assets/images/avatars/avatar-roman.png); --empire-info:"I came, I saw, I conquered... Special ability:"}
+.empire-card[data-empire="egyptian"] { --select-emblem: url(assets/images/avatars/avatar-egyptian.png); --empire-info:"Egypt is the gift of the Nile... Special ability:"}
+.empire-card[data-empire="iberian"]      { --select-emblem: url(assets/images/avatars/avatar-iberian.png); --empire-info:"Out of the rock, an empire is forged... Special ability:"}
+
+.select-emblem{
+    width: 50%;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    border: 3px solid #D0B86E;
+    background-size: cover;
+    background-position: center;
+    background-image: var(--select-emblem);
+}
+
+.tag { display: none; }
+
+/* scale the avatar + arrow that have fixed sizes inline in the HTML */
+.profile > img:first-child { width: 3.125rem !important; height: 3.125rem !important; }
+.profile > img:last-child  { width: 1.125rem !important; height: 0.9375rem !important; }
+
+#intro-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    text-align: center;
+    color: var(--accent-bright);
+    /* themed glow in the middle fading to black at the edges */
+    background: var(--overlay-bg);
+
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 2s;
+}
+
+#intro-overlay.show {
+    opacity: 1;
+    pointer-events: all;
+}
+
+#intro-overlay h1 {
+    margin: 0;
+    font-size: 3.5rem;
+    letter-spacing: 0.5rem;
+    text-transform: uppercase;
+    text-shadow: 0 0 20px rgba(212, 168, 90, 0.5);
+}
+
+#intro-matchup {
+    margin: 0;
+    font-size: 1.1rem;
+    letter-spacing: 0.3rem;
+    text-transform: uppercase;
+    color: var(--accent);
+    opacity: 0.8;
+}
+
+#intro-overlay .divider {
+    width: 12rem;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+}
+
+#intro-count {
+    margin: 0;
+    font-size: 6rem;
+    font-weight: 700;
+}
+
+/* each number "pops" in */
+#intro-count.pop { animation: pop 0.8s ease-out; }
+
+@keyframes pop {
+    from { transform: scale(1.6); opacity: 0; }
+    to   { transform: scale(1);   opacity: 1; }
+}
+
+/* text fades away just before the page changes */
+#intro-overlay.leaving > * {
+    opacity: 0;
+    transition: opacity 0.6s;
+}
+
+.empire-preview {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100vh;
+  width: min(100vw, calc(100vh * 1.49));
+  z-index: -1;
+  pointer-events: none;
+
+  background-image: var(--bg-empire-preview);
+  background-size: cover;
+  background-position: right bottom;
+  background-repeat: no-repeat;
+
+    mask-image:
+    linear-gradient(to bottom right, transparent 45%, black 55%),
+    linear-gradient(to right, transparent 0%, black 25%);
+    mask-composite: intersect;
+    -webkit-mask-composite: source-in;
+}
+
+body[data-empire="ottoman"] {
+  --bg-page: url("assets/images/backgrounds/ottoman-background.jpg");
+  --bg-empire-preview: url("assets/images/backgrounds/ottoman-preview.jpg");
+  --accent: #d4a85a;
+  --accent-bright: #DCBB68;
+  --edge: #481B1B;
+  --glow: rgba(180, 30, 30, 0.45);
+  --overlay-bg: radial-gradient(circle at center, #3a1212 0%, #140606 55%, #000 100%);
+}
+
+body[data-empire="roman"] {
+  --bg-page: url("assets/images/backgrounds/roman-backgrounds.jpg");
+  --bg-empire-preview: url("assets/images/backgrounds/roman-preview.jpg");
+  --accent: #c9a24b;
+  --accent-bright: #e8c15a;
+  --edge: #5a1a1a;
+  --glow: rgba(200, 40, 40, 0.45);
+  --overlay-bg: radial-gradient(circle at center, #4a1010 0%, #1a0606 55%, #000 100%);
+}
+
+body[data-empire="carthaginian"] {
+  --bg-page: url("assets/images/backgrounds/carthaginian-background.jpg");
+  --bg-empire-preview: url("assets/images/backgrounds/carthaginian-preview.jpg");
+  --accent: #b48cd4;
+  --accent-bright: #d4b4ee;
+  --edge: #3a1f4a;
+  --glow: rgba(140, 80, 200, 0.45);
+  --overlay-bg: radial-gradient(circle at center, #2a1240 0%, #0e0618 55%, #000 100%);
+}
+
+body[data-empire="egyptian"] {
+  --bg-page: url("assets/images/backgrounds/egyptian-background.jpg");
+  --bg-empire-preview: url("assets/images/backgrounds/egyptian-preview.jpg");
+  --accent: #d4b44a;
+  --accent-bright: #ecd070;
+  --edge: #1f3a5a;
+  --glow: rgba(40, 100, 200, 0.45);
+  --overlay-bg: radial-gradient(circle at center, #10284a 0%, #060f1e 55%, #000 100%);
+}
+
+body[data-empire="iberian"] {
+  --bg-page: url("assets/images/backgrounds/iberian-background.jpg");
+  --bg-empire-preview: url("assets/images/backgrounds/iberian-preview.jpg");
+  --accent: #b8864a;
+  --accent-bright: #d9a866;
+  --edge: #3a2a14;
+  --glow: rgba(200, 120, 40, 0.45);
+  --overlay-bg: radial-gradient(circle at center, #3a2410 0%, #140c05 55%, #000 100%);
+}

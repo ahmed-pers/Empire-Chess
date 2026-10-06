@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Empire Chess</title>
+    <link rel="stylesheet" href="empire_select.css">
+</head>
+<body>
+
+    <div class="empire-preview"></div>
+
+    <audio src="assets/music/ottoman.mp3" autoplay loop id="bg-music"></audio>
+    <audio src="assets/music/quote-ottoman.mp3" id="quote-audio"></audio>
+    <audio src="assets/music/start.mp3" id="start-audio"></audio>
+    
+    <header>
+        <div class="logo">
+            <img src="assets/images/logo/logo.png" alt="logo">
+        </div>
+
+        <div id="intro-overlay">
+            <p id="intro-matchup"></p>
+            <h1>The Battle Begins</h1>
+            <div class="divider"></div>
+            <p id="intro-count"></p>
+        </div>
+
+        <div class="header-buttons">
+            <div class="button">
+                <a href="home.html">
+                    <button class="home-button"></button>
+                </a>
+                <p>Home</p>
+            </div>
+            <div class="button">
+                <a href="empire_select.html">
+                    <button class="empire-button"></button>
+                </a>
+                <p>Empire</p>
+            </div>
+            <div class="button">
+                <a href="puzzle.html">
+                    <button class="puzzle-button"></button>
+                </a>
+                <p>Puzzles</p>
+            </div>
+            <div class="button">
+                <a href="stats.html">
+                    <button class="stats-button"></button>
+                </a>
+                <p>Stats</p>
+            </div>
+        </div>
+
+        <div class="profile">
+            <img src="assets/images/avatars/avatar-sultan.png" alt="proile image" style="width: 50px; height:50px;">
+            <span>
+                <p>Sultan_82</p>
+                <p>Empire Elite</p>
+            </span>
+            <img src="assets/images/icons/chevron-down.png" alt="down arrow" style="width: 18px; height: 15px;">
+        </div>
+    </header>
+
+    <main>
+        <section class="player-panel" id="p1">
+            <h2 class="panel-banner">Choose your Empire</h2>
+            <div class="empire-grid">
+                <div class="empire-card" data-empire="carthaginian">
+                    <div class="select-emblem"></div>
+                    <span class="label">Carthaginian</span>
+                </div>
+                <div class="empire-card" data-empire="ottoman">
+                    <div class="select-emblem"></div>
+                    <span class="label">Ottoman</span>
+                </div>
+                <div class="empire-card" data-empire="roman">
+                    <div class="select-emblem"></div>
+                    <span class="label">Roman</span>
+                </div>
+                <div class="empire-card" data-empire="egyptian">
+                    <div class="select-emblem"></div>
+                    <span class="label">Egyptian</span>
+                </div>
+                <div class="empire-card" data-empire="iberian">
+                    <div class="select-emblem"></div>
+                    <span class="label">Iberan</span>
+                </div>
+                <div class="empire-card empty">Select an <br> Empire</div>
+                <div class="empire-card empty">Select an <br> Empire</div>
+                <div class="empire-card empty">Select an <br> Empire</div>
+                <div class="empire-card empty">Select an <br> Empire</div>
+            </div>
+            <p class="status">P1 Empire: [Pending]</p>
+            <div class="info-box">Empire info</div>
+        </section>
+
+        <div class="start-wrap">
+            <button class="start-btn" disabled>Start Game</button>
+        </div>
+    </main>
+    <script src="script.js"></script>
+</body>
+</html>
