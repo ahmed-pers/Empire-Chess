@@ -81,29 +81,50 @@ function fadeOut(audio, duration) {
     }, 50);
 }
 
-function countdown() {
-    let n = 3;
-    countEl.textContent = n;
+function playQuote() {
+  return new Promise(resolve => {
+    const finish = () => resolve();
+    quote.addEventListener("ended", finish, { once: true });
+    quote.addEventListener("error", finish, { once: true });
+    quote.play().catch(finish);
+  });
+}
+
+function countdown(quoteFinished) {
+  let n = 3;
+  countEl.textContent = n;
+
+  // resolves when the 3-2-1 is done
+  const countdownDone = new Promise(resolve => {
     const timer = setInterval(() => {
-        n--;
-        if (n > 0) {
-            countEl.textContent = n;
-        } else {
-            clearInterval(timer);
-            introOverlay.classList.add("leaving");
-            window.location.href = `game.html`;
-        }
+      n--;
+      if (n > 0) {
+        countEl.textContent = n;
+      } else {
+        clearInterval(timer);
+        countEl.textContent = "";
+        resolve();
+      }
     }, 1000);
+  });
+
+  // go to the game only when BOTH the countdown and the quote are finished
+  Promise.all([countdownDone, quoteFinished]).then(() => {
+    introOverlay.classList.add("leaving");
+    setTimeout(() => {
+      window.location.href = "game.html";
+    }, 500); // lets the "leaving" animation play first
+  });
 }
 
 startBtn.addEventListener("click", () => {
     startBtn.disabled = true;      // prevents double clicks
     introOverlay.classList.add("show"); // screen fades to black
     fadeOut(bgm, 2000);          // music fades over 2s
-    quote.play();                  // character quote starts
+    const quoteFinished = playQuote(); // character quote starts
     startAudio.play();
     fadeOut(startAudio, 5000);
-    setTimeout(countdown, 2500);   // countdown begins after the fade
+    setTimeout(() => countdown(quoteFinished), 2500); // countdown begins after the fade
 });
 
 // music for each empire (the visuals live in the CSS, under body[data-empire="..."])
@@ -112,7 +133,7 @@ const THEMES = {
   roman:        { music: "assets/music/roman.mp3",        quote: "assets/music/quote-roman.mp3" },
   carthaginian: { music: "assets/music/carthaginian.mp3", quote: "assets/music/quote-carthaginian.mp3" },
   egyptian:     { music: "assets/music/egyptian.mp3",     quote: "assets/music/quote-egyptian.mp3" },
-  iberian:      { music: "assets/music/iberian.mp3",      quote: "assets/music/quote-iberian.mp3" }
+  andalus:      { music: "assets/music/andalus.mp3",      quote: "assets/music/quote-andalus.mp3" }
 };
 
 function applyTheme(empire) {

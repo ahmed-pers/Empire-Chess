@@ -325,7 +325,7 @@ main{
 .empire-card[data-empire="ottoman"]      { --select-emblem: url(assets/images/avatars/avatar-sultan.png); --empire-info:"Constantinople, either i conquer you, or you conquer me... Special ability:"}
 .empire-card[data-empire="roman"]      { --select-emblem: url(assets/images/avatars/avatar-roman.png); --empire-info:"I came, I saw, I conquered... Special ability:"}
 .empire-card[data-empire="egyptian"] { --select-emblem: url(assets/images/avatars/avatar-egyptian.png); --empire-info:"Egypt is the gift of the Nile... Special ability:"}
-.empire-card[data-empire="iberian"]      { --select-emblem: url(assets/images/avatars/avatar-iberian.png); --empire-info:"Out of the rock, an empire is forged... Special ability:"}
+.empire-card[data-empire="andalus"]      { --select-emblem: url(assets/images/avatars/avatar-andalus.png); --empire-info:"The light of europe... Special ability:"}
 
 .select-emblem{
     width: 50%;
@@ -442,7 +442,7 @@ body[data-empire="ottoman"] {
 }
 
 body[data-empire="roman"] {
-  --bg-page: url("assets/images/backgrounds/roman-backgrounds.jpg");
+  --bg-page: url("assets/images/backgrounds/roman-background.jpg");
   --bg-empire-preview: url("assets/images/backgrounds/roman-preview.jpg");
   --accent: #c9a24b;
   --accent-bright: #e8c15a;
@@ -461,22 +461,27 @@ body[data-empire="carthaginian"] {
   --overlay-bg: radial-gradient(circle at center, #2a1240 0%, #0e0618 55%, #000 100%);
 }
 
+
 body[data-empire="egyptian"] {
   --bg-page: url("assets/images/backgrounds/egyptian-background.jpg");
   --bg-empire-preview: url("assets/images/backgrounds/egyptian-preview.jpg");
   --accent: #d4b44a;
   --accent-bright: #ecd070;
-  --edge: #1f3a5a;
-  --glow: rgba(40, 100, 200, 0.45);
-  --overlay-bg: radial-gradient(circle at center, #10284a 0%, #060f1e 55%, #000 100%);
+  --edge: #5a4010;                  /* was blue */
+  --glow: rgba(212, 170, 80, 0.45); /* was blue */
+  --overlay-bg: radial-gradient(circle at center, #3a280e 0%, #140d05 55%, #000 100%);
+  --header-bg: 30, 18, 8;           /* was 10, 20, 40 */
+
+  background-color: #a8803c;        /* this color tints the image */
+  background-blend-mode: luminosity;
 }
 
-body[data-empire="iberian"] {
-  --bg-page: url("assets/images/backgrounds/iberian-background.jpg");
-  --bg-empire-preview: url("assets/images/backgrounds/iberian-preview.jpg");
-  --accent: #b8864a;
-  --accent-bright: #d9a866;
-  --edge: #3a2a14;
-  --glow: rgba(200, 120, 40, 0.45);
-  --overlay-bg: radial-gradient(circle at center, #3a2410 0%, #140c05 55%, #000 100%);
+body[data-empire="andalus"] {
+  --bg-page: url("assets/images/backgrounds/andalus-background.jpg");
+  --bg-empire-preview: url("assets/images/backgrounds/andalus-preview.jpg");
+  --accent: #3d9a5a;
+  --accent-bright: #5fc77f;
+  --edge: #123019;
+  --glow: rgba(60, 190, 100, 0.45);
+  --overlay-bg: radial-gradient(circle at center, #0f3a1c 0%, #05140a 55%, #000 100%);
 }
