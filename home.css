@@ -9,13 +9,13 @@
   --edge: #481B1B;
   --glow: rgba(180, 30, 30, 0.45);
 
-  --bg-page:            url("assets/images/backgrounds/ottoman-background.jpg");
-  --bg-move-history:    url("assets/images/backgrounds/move-history-bg.png");
+  --bg-page:            url("assets/images/backgrounds/ottoman/ottoman-background.jpg");
+    --bg-move-history:    url("assets/images/backgrounds/ottoman/move-history-bg-ottoman.png");
 
-  --bg-player-card:     url("assets/images/backgrounds/playercard-bg-turkey.png");
-  --bg-opponent-card:   url("assets/images/backgrounds/playercard-bg-carthage.png");
-  --bg-player-name:     url("assets/images/backgrounds/namecard-bg-turkey.png");
-  --bg-opponent-name:   url("assets/images/backgrounds/namecard-bg-carthage.png");
+  --bg-player-card:     url("assets/images/backgrounds/ottoman/playercard-bg-turkey.png");
+  --bg-opponent-card:   url("assets/images/backgrounds/carthaginian/playercard-bg-carthage.png");
+  --bg-player-name:     url("assets/images/backgrounds/ottoman/namecard-bg-turkey.png");
+  --bg-opponent-name:   url("assets/images/backgrounds/carthaginian/namecard-bg-carthage.png");
 
   --icon-home:          url("assets/images/icons/empire.png");
   --icon-empire:        url("assets/images/icons/empire.png");

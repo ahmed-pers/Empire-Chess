@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Empire Chess</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="game.css">
 </head>
 <body>
     <div id="fade-in"></div>
@@ -41,7 +41,7 @@
         </div>
 
         <div class="profile">
-            <img src="assets/images/avatars/avatar-sultan.png" alt="proile image" style="width: 50px; height:50px;">
+            <img id="header-profile-avatar" src="assets/images/avatars/avatar-sultan.png" alt="profile image" style="width: 50px; height:50px;">
             <span>
                 <p>Sultan_82</p>
                 <p>Empire Elite</p>
@@ -54,7 +54,7 @@
     <main>
         <section class="sidebar-left">
             <div class="opponent-card">
-                <img src="assets/images/flags/carthaginian_flag.png" alt="player flag" class="flag">
+                <img id="opponent-flag" src="assets/images/flags/carthaginian_flag.png" alt="opponent flag" class="flag">
                 <div class="name-banner">
                     <img src="assets/images/avatars/avatar-carthage.png" alt="player pic">
                     <span>
@@ -64,9 +64,9 @@
                 </div>
             </div>
             <div class="player-card">
-                <img src="assets/images/flags/ottoman_flag.png" alt="player flag" class="flag">
+                <img id="player-flag" src="assets/images/flags/ottoman_flag.png" alt="player flag" class="flag">
                 <div class="name-banner">
-                    <img src="assets/images/avatars/avatar-sultan.png" alt="player pic">
+                    <img id="player-banner-avatar" src="assets/images/avatars/avatar-sultan.png" alt="player pic">
                     <span>
                         <p class="timer">10:00</p>
                         <p>Sultan_82</p>
@@ -75,7 +75,7 @@
             </div> 
         </section>
         <section class="content-center">
-            <img src="assets/images/board/board.png" alt="board">
+            <img id="game-board" src="assets/images/board/board.png" alt="board">
         </section>
         <section class="sidebar-right">
             <div class="move-history">

@@ -1,21 +1,79 @@
 const bgm = document.getElementById('bg-music');
 const overlay = document.getElementById('start-overlay');
 
-// pick up where the last page left off
-bgm.currentTime = sessionStorage.getItem('bgm-time') || 0;
+const GAME_VISUALS = {
+  ottoman: {
+    board: "assets/images/board/board-ottoman.png",
+    flag: "assets/images/flags/ottoman_flag.png",
+    opponentFlag: "assets/images/flags/carthaginian_flag.png",
+    avatar: "assets/images/avatars/avatar-sultan.png"
+  },
+  roman: {
+    board: "assets/images/board/board-roman.png",
+    flag: "assets/images/flags/roman_flag.png",
+    opponentFlag: "assets/images/flags/carthaginian_flag.png",
+    avatar: "assets/images/avatars/avatar-roman.png"
+  },
+  carthaginian: {
+    board: "assets/images/board/board-carthaginian.png",
+    flag: "assets/images/flags/carthaginian_flag.png",
+    opponentFlag: "assets/images/flags/ottoman_flag.png",
+    avatar: "assets/images/avatars/avatar-carthage.png"
+  },
+  egyptian: {
+    board: "assets/images/board/board-egyptian.png",
+    flag: "assets/images/flags/egyptian_flag.png",
+    opponentFlag: "assets/images/flags/carthaginian_flag.png",
+    avatar: "assets/images/avatars/avatar-egyptian.png"
+  },
+  andalus: {
+    board: "assets/images/board/board-andalus.png",
+    flag: "assets/images/flags/andalus_flag.png",
+    opponentFlag: "assets/images/flags/carthaginian_flag.png",
+    avatar: "assets/images/avatars/avatar-andalus.png"
+  }
+};
 
-// save the position every half second
-setInterval(() => sessionStorage.setItem('bgm-time', bgm.currentTime), 500);
+function applyGameVisuals(empire) {
+  const visuals = GAME_VISUALS[empire];
+  if (!visuals) return;
 
-// home page: wait for a key, then play and hide the overlay
-if (overlay) {
-  window.addEventListener('keydown', () => {
-    bgm.play();
-    overlay.style.display = 'none';
-  }, { once: true });
-} else {
-  // other pages: just play
-  bgm.play().catch(() => {});
+  const board = document.getElementById("game-board");
+  const flag = document.getElementById("player-flag");
+  const opponentFlag = document.getElementById("opponent-flag");
+  const headerAvatar = document.getElementById("header-profile-avatar");
+  const bannerAvatar = document.getElementById("player-banner-avatar");
+
+  if (board && visuals.board) board.src = visuals.board;
+  if (flag && visuals.flag) flag.src = visuals.flag;
+  if (opponentFlag && visuals.opponentFlag) opponentFlag.src = visuals.opponentFlag;
+  if (headerAvatar) headerAvatar.src = visuals.avatar;
+  if (bannerAvatar) bannerAvatar.src = visuals.avatar;
+}
+
+if (bgm) {
+  // pick up where the last page left off
+  bgm.currentTime = sessionStorage.getItem('bgm-time') || 0;
+
+  // save the position every half second
+  setInterval(() => sessionStorage.setItem('bgm-time', bgm.currentTime), 500);
+
+  // home page: wait for a key, then play and hide the overlay
+  if (overlay) {
+    window.addEventListener('keydown', () => {
+      bgm.play();
+      overlay.style.display = 'none';
+    }, { once: true });
+  } else {
+    // other pages: just play
+    bgm.play().catch(() => {});
+  }
+}
+
+const savedEmpire = localStorage.getItem("selectedEmpire");
+if (savedEmpire) {
+  document.body.dataset.empire = savedEmpire;
+  applyGameVisuals(savedEmpire);
 }
 
 const empireGrids = document.querySelectorAll(".empire-grid");
@@ -117,8 +175,9 @@ function countdown(quoteFinished) {
   });
 }
 
-startBtn.addEventListener("click", () => {
+startBtn?.addEventListener("click", () => {
     startBtn.disabled = true;      // prevents double clicks
+    localStorage.setItem("selectedEmpire", document.body.dataset.empire);
     introOverlay.classList.add("show"); // screen fades to black
     fadeOut(bgm, 2000);          // music fades over 2s
     const quoteFinished = playQuote(); // character quote starts

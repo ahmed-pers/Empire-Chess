@@ -4,14 +4,14 @@
   --crimson: #481B1B;
 
   /* ---------- Theme images (default theme: Ottoman vs Carthage) ---------- */
-  --bg-page:            url("assets/images/backgrounds/ottoman-background.jpg");
-  --bg-move-history:    url("assets/images/backgrounds/move-history-bg.png");
+  --bg-page:            url("assets/images/backgrounds/ottoman/ottoman-background.jpg");
+  --bg-move-history:    url("assets/images/backgrounds/ottoman/move-history-bg-ottoman.png");
 
-  --bg-player-card:     url("assets/images/backgrounds/playercard-bg-turkey.png");
-  --bg-opponent-card:   url("assets/images/backgrounds/playercard-bg-carthage.png");
-  --bg-player-name:     url("assets/images/backgrounds/namecard-bg-turkey.png");
-  --bg-opponent-name:   url("assets/images/backgrounds/namecard-bg-carthage.png");
-  --bg-infobox:         url("assets/images/backgrounds/info-box-bg-.png");
+  --bg-player-card:     url("assets/images/backgrounds/ottoman/playercard-bg-turkey.png");
+  --bg-opponent-card:   url("assets/images/backgrounds/carthaginian/playercard-bg-carthage.png");
+  --bg-player-name:     url("assets/images/backgrounds/ottoman/namecard-bg-turkey.png");
+  --bg-opponent-name:   url("assets/images/backgrounds/carthaginian/namecard-bg-carthage.png");
+  --bg-infobox:         url("assets/images/backgrounds/shared/info-box-bg-.png");
 
   --icon-home:          url("assets/images/icons/empire.png");
   --icon-empire:        url("assets/images/icons/empire.png");
@@ -23,11 +23,11 @@
   --card-gap: 2px;
   --panel-gap: 0.5rem;
   --gold: #c9a24b;
-  --pannel-banner-bg:  url("assets/images/backgrounds/panel-banner-bg.png");
+  --pannel-banner-bg:  url("assets/images/backgrounds/shared/panel-banner-bg.png");
 
   --empire-info: "info";
 
-  --bg-empire-preview: url("assets/images/backgrounds/ottoman-preview.jpg");
+  --bg-empire-preview: url("assets/images/backgrounds/ottoman/ottoman-preview.jpg");
   --accent: #d4a85a;
   --accent-bright: #DCBB68;
   --edge: #481B1B;
@@ -224,7 +224,7 @@ main{
     display: flex;
     justify-content: center;
     align-items: center;
-    background-image: url("assets/images/backgrounds/empire-card-bg.png");
+    background-image: url("assets/images/backgrounds/shared/empire-card-bg.png");
     background-size: 100% 100%;
     background-repeat: no-repeat;
     background-position: center;
@@ -432,8 +432,8 @@ main{
 }
 
 body[data-empire="ottoman"] {
-  --bg-page: url("assets/images/backgrounds/ottoman-background.jpg");
-  --bg-empire-preview: url("assets/images/backgrounds/ottoman-preview.jpg");
+  --bg-page: url("assets/images/backgrounds/ottoman/ottoman-background.jpg");
+  --bg-empire-preview: url("assets/images/backgrounds/ottoman/ottoman-preview.jpg");
   --accent: #d4a85a;
   --accent-bright: #DCBB68;
   --edge: #481B1B;
@@ -442,8 +442,8 @@ body[data-empire="ottoman"] {
 }
 
 body[data-empire="roman"] {
-  --bg-page: url("assets/images/backgrounds/roman-background.jpg");
-  --bg-empire-preview: url("assets/images/backgrounds/roman-preview.jpg");
+  --bg-page: url("assets/images/backgrounds/roman/roman-background.jpg");
+  --bg-empire-preview: url("assets/images/backgrounds/roman/roman-preview.jpg");
   --accent: #c9a24b;
   --accent-bright: #e8c15a;
   --edge: #5a1a1a;
@@ -452,8 +452,8 @@ body[data-empire="roman"] {
 }
 
 body[data-empire="carthaginian"] {
-  --bg-page: url("assets/images/backgrounds/carthaginian-background.jpg");
-  --bg-empire-preview: url("assets/images/backgrounds/carthaginian-preview.jpg");
+  --bg-page: url("assets/images/backgrounds/carthaginian/carthaginian-background.jpg");
+  --bg-empire-preview: url("assets/images/backgrounds/carthaginian/carthaginian-preview.jpg");
   --accent: #b48cd4;
   --accent-bright: #d4b4ee;
   --edge: #3a1f4a;
@@ -463,8 +463,8 @@ body[data-empire="carthaginian"] {
 
 
 body[data-empire="egyptian"] {
-  --bg-page: url("assets/images/backgrounds/egyptian-background.jpg");
-  --bg-empire-preview: url("assets/images/backgrounds/egyptian-preview.jpg");
+  --bg-page: url("assets/images/backgrounds/egyptian/egyptian-background.jpg");
+  --bg-empire-preview: url("assets/images/backgrounds/egyptian/egyptian-preview.jpg");
   --accent: #d4b44a;
   --accent-bright: #ecd070;
   --edge: #5a4010;                  /* was blue */
@@ -477,8 +477,9 @@ body[data-empire="egyptian"] {
 }
 
 body[data-empire="andalus"] {
-  --bg-page: url("assets/images/backgrounds/andalus-background.jpg");
-  --bg-empire-preview: url("assets/images/backgrounds/andalus-preview.jpg");
+  --bg-page: url("assets/images/backgrounds/andalus/andalus-background.jpg");
+  --bg-empire-preview: url("assets/images/backgrounds/andalus/andalus-preview.jpg");
+  --header-bg: 18, 48, 25;
   --accent: #3d9a5a;
   --accent-bright: #5fc77f;
   --edge: #123019;
