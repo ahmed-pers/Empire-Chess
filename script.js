@@ -70,7 +70,7 @@ if (bgm) {
   }
 }
 
-const savedEmpire = localStorage.getItem("selectedEmpire");
+const savedEmpire = sessionStorage.getItem("empire") || localStorage.getItem("selectedEmpire");
 if (savedEmpire) {
   document.body.dataset.empire = savedEmpire;
   applyGameVisuals(savedEmpire);
@@ -122,68 +122,11 @@ empireGrids.forEach((empireGrid, index) => {
   });
 });
 
-const quote    = document.getElementById("quote-audio");
-const startAudio    = document.getElementById("start-audio");
-const introOverlay  = document.getElementById("intro-overlay");
-const countEl  = document.getElementById("intro-count");
-
-// lowers the volume a little every 50ms until it reaches 0
-function fadeOut(audio, duration) {
-    const step = audio.volume / (duration / 50);
-    const timer = setInterval(() => {
-        audio.volume = Math.max(0, audio.volume - step);
-        if (audio.volume === 0) {
-            audio.pause();
-            clearInterval(timer);
-        }
-    }, 50);
-}
-
-function playQuote() {
-  return new Promise(resolve => {
-    const finish = () => resolve();
-    quote.addEventListener("ended", finish, { once: true });
-    quote.addEventListener("error", finish, { once: true });
-    quote.play().catch(finish);
-  });
-}
-
-function countdown(quoteFinished) {
-  let n = 3;
-  countEl.textContent = n;
-
-  // resolves when the 3-2-1 is done
-  const countdownDone = new Promise(resolve => {
-    const timer = setInterval(() => {
-      n--;
-      if (n > 0) {
-        countEl.textContent = n;
-      } else {
-        clearInterval(timer);
-        countEl.textContent = "";
-        resolve();
-      }
-    }, 1000);
-  });
-
-  // go to the game only when BOTH the countdown and the quote are finished
-  Promise.all([countdownDone, quoteFinished]).then(() => {
-    introOverlay.classList.add("leaving");
-    setTimeout(() => {
-      window.location.href = "game.html";
-    }, 500); // lets the "leaving" animation play first
-  });
-}
-
 startBtn?.addEventListener("click", () => {
-    startBtn.disabled = true;      // prevents double clicks
+    startBtn.disabled = true;
     localStorage.setItem("selectedEmpire", document.body.dataset.empire);
-    introOverlay.classList.add("show"); // screen fades to black
-    fadeOut(bgm, 2000);          // music fades over 2s
-    const quoteFinished = playQuote(); // character quote starts
-    startAudio.play();
-    fadeOut(startAudio, 5000);
-    setTimeout(() => countdown(quoteFinished), 2500); // countdown begins after the fade
+    sessionStorage.setItem("empire", document.body.dataset.empire);
+    window.location.href = "lobby.html";
 });
 
 // music for each empire (the visuals live in the CSS, under body[data-empire="..."])

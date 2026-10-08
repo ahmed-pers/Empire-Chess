@@ -7,6 +7,16 @@
     <link rel="stylesheet" href="game.css">
 </head>
 <body>
+    <audio src="assets/music/quote-ottoman.mp3" id="quote-audio"></audio>
+    <audio src="assets/music/start.mp3" id="start-audio"></audio>
+
+    <div id="intro-overlay">
+        <p id="intro-matchup"></p>
+        <h1>The Battle Begins</h1>
+        <div class="divider"></div>
+        <p id="intro-count"></p>
+    </div>
+
     <div id="fade-in"></div>
     <header>
         <div class="logo">
@@ -112,6 +122,8 @@
         </section>
     </main>
 
-    <script src="script.js"></script>    
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="game_online.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>

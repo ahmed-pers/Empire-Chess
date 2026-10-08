@@ -1,0 +1,24 @@
+{
+  "name": "empire-chess",
+  "version": "1.0.0",
+  "description": "",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ahmed-pers/Empire-Chess.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ahmed-pers/Empire-Chess/issues"
+  },
+  "homepage": "https://github.com/ahmed-pers/Empire-Chess#readme",
+  "dependencies": {
+    "express": "^5.2.1",
+    "socket.io": "^4.8.4"
+  }
+}

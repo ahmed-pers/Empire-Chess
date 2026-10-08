@@ -33,6 +33,7 @@
   --edge: #481B1B;
   --glow: rgba(180, 30, 30, 0.45);
   --overlay-bg: radial-gradient(circle at center, #3a1212 0%, #140606 55%, #000 100%);
+    --header-bg: 40, 8, 10;
 }
 
 body[data-empire="ottoman"] {
@@ -42,6 +43,7 @@ body[data-empire="ottoman"] {
     --accent-bright: #DCBB68;
     --edge: #481B1B;
     --glow: rgba(180, 30, 30, 0.45);
+    --header-bg: 40, 8, 10;
     --bg-player-card:     url("assets/images/backgrounds/ottoman/playercard-bg-turkey.png");
     --bg-opponent-card:   url("assets/images/backgrounds/carthaginian/playercard-bg-carthage.png");
     --bg-player-name:     url("assets/images/backgrounds/ottoman/namecard-bg-turkey.png");
@@ -57,6 +59,7 @@ body[data-empire="roman"] {
     --accent-bright: #e8c15a;
     --edge: #5a1a1a;
     --glow: rgba(200, 40, 40, 0.45);
+    --header-bg: 44, 10, 10;
     --bg-player-card:     url("assets/images/backgrounds/roman/playercard-bg-roman.png");
     --bg-opponent-card:   url("assets/images/backgrounds/carthaginian/playercard-bg-carthage.png");
     --bg-player-name:     url("assets/images/backgrounds/roman/namecard-bg-roman.png");
@@ -72,6 +75,7 @@ body[data-empire="carthaginian"] {
     --accent-bright: #d4b4ee;
     --edge: #3a1f4a;
     --glow: rgba(140, 80, 200, 0.45);
+    --header-bg: 30, 16, 44;
     --bg-player-card:     url("assets/images/backgrounds/carthaginian/playercard-bg-carthage.png");
     --bg-opponent-card:   url("assets/images/backgrounds/roman/playercard-bg-roman.png");
     --bg-player-name:     url("assets/images/backgrounds/carthaginian/namecard-bg-carthage.png");
@@ -87,6 +91,7 @@ body[data-empire="egyptian"] {
     --accent-bright: #ecd070;
     --edge: #5a4010;
     --glow: rgba(212, 170, 80, 0.45);
+    --header-bg: 30, 18, 8;
     --bg-player-card:     url("assets/images/backgrounds/egyptian/playercard-bg-egyptian.png");
     --bg-opponent-card:   url("assets/images/backgrounds/carthaginian/playercard-bg-carthage.png");
     --bg-player-name:     url("assets/images/backgrounds/egyptian/namecard-bg-egyptian.png");
@@ -102,6 +107,7 @@ body[data-empire="andalus"] {
     --accent-bright: #5fc77f;
     --edge: #123019;
     --glow: rgba(60, 190, 100, 0.45);
+    --header-bg: 18, 48, 25;
     --bg-player-card:     url("assets/images/backgrounds/andalus/playercard-bg-andalus.png");
     --bg-opponent-card:   url("assets/images/backgrounds/carthaginian/playercard-bg-carthage.png");
     --bg-player-name:     url("assets/images/backgrounds/andalus/namecard-bg-andalus.png");
@@ -134,7 +140,80 @@ body {
     background-size: cover;
 }
 
+#intro-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1001;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    text-align: center;
+    color: var(--accent-bright);
+    background: var(--overlay-bg);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 2s;
+}
+
+#intro-overlay.show {
+    opacity: 1;
+    pointer-events: all;
+}
+
+#intro-overlay.leaving {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.7s;
+}
+
+#intro-overlay h1 {
+    margin: 0;
+    font-size: 3.5rem;
+    letter-spacing: 0.5rem;
+    text-transform: uppercase;
+    text-shadow: 0 0 20px rgba(212, 168, 90, 0.5);
+}
+
+#intro-matchup {
+    margin: 0;
+    font-size: 1.1rem;
+    letter-spacing: 0.3rem;
+    text-transform: uppercase;
+    color: var(--accent);
+    opacity: 0.8;
+}
+
+#intro-overlay .divider {
+    width: 12rem;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+}
+
+#intro-count {
+    margin: 0;
+    font-size: 6rem;
+    font-weight: 700;
+}
+
+#intro-count.pop {
+    animation: pop 0.8s ease-out;
+}
+
+#intro-overlay.leaving > * {
+    opacity: 0;
+    transition: opacity 0.6s;
+}
+
+@keyframes pop {
+    from { transform: scale(1.6); opacity: 0; }
+    to   { transform: scale(1); opacity: 1; }
+}
+
 header{
+    position: relative;
+    isolation: isolate;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     padding: 1rem 1rem;
@@ -142,6 +221,18 @@ header{
     border-bottom: 1px solid var(--edge);
     align-items: center;
     gap: 15rem;
+}
+
+header::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    top: -8px;
+    bottom: 0;
+    left: 50%;
+    width: 100vw;
+    transform: translateX(-50%);
+    background: rgba(var(--header-bg), 0.3);
 }
 
 body[data-empire="andalus"] header {

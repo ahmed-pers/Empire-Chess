@@ -1,0 +1,567 @@
+:root {
+  --gold: #d4a85a;
+  --gold-bright: #DCBB68;
+  --crimson: #481B1B;
+
+  /* ---------- Theme images (default theme: Ottoman vs Carthage) ---------- */
+  --bg-page:            url("assets/images/backgrounds/ottoman/ottoman-background.jpg");
+  --bg-move-history:    url("assets/images/backgrounds/ottoman/move-history-bg-ottoman.png");
+
+  --bg-player-card:     url("assets/images/backgrounds/ottoman/playercard-bg-turkey.png");
+  --bg-opponent-card:   url("assets/images/backgrounds/carthaginian/playercard-bg-carthage.png");
+  --bg-player-name:     url("assets/images/backgrounds/ottoman/namecard-bg-turkey.png");
+  --bg-opponent-name:   url("assets/images/backgrounds/carthaginian/namecard-bg-carthage.png");
+  --bg-infobox:         url("assets/images/backgrounds/shared/info-box-bg-.png");
+  --bg-lobby:           url("assets/images/lobby/ottoman-lobby.png");
+
+  --icon-home:          url("assets/images/icons/empire.png");
+  --icon-empire:        url("assets/images/icons/empire.png");
+  --icon-puzzles:       url("assets/images/icons/puzzles.png");
+  --icon-stats:         url("assets/images/icons/stats.png");
+  --icon-draw:          url("assets/images/icons/draw.png");
+  --icon-resign:        url("assets/images/icons/btn-flag.png");
+
+  --card-gap: 2px;
+  --panel-gap: 0.5rem;
+  --gold: #c9a24b;
+  --pannel-banner-bg:  url("assets/images/backgrounds/shared/panel-banner-bg.png");
+
+  --empire-info: "info";
+
+  --bg-empire-preview: url("assets/images/backgrounds/ottoman/ottoman-preview.jpg");
+  --accent: #d4a85a;
+  --accent-bright: #DCBB68;
+  --edge: #481B1B;
+  --glow: rgba(180, 30, 30, 0.45);
+  --overlay-bg: radial-gradient(circle at center, #3a1212 0%, #140606 55%, #000 100%);
+
+  --header-bg: 40, 8, 10;
+}
+body[data-empire="ottoman"]       { --header-bg: 40, 8, 10; }
+body[data-empire="roman"]       { --header-bg: 44, 10, 10; }
+body[data-empire="carthaginian"]{ --header-bg: 30, 16, 44; }
+body[data-empire="egyptian"]    { --header-bg: 10, 20, 40; }
+body[data-empire="iberian"]     { --header-bg: 28, 18, 8; }
+
+body[data-empire="ottoman"] {
+    --bg-page: url("assets/images/backgrounds/ottoman/ottoman-background.jpg");
+    --bg-move-history: url("assets/images/backgrounds/ottoman/move-history-bg-ottoman.png");
+    --accent: #d4a85a;
+    --accent-bright: #DCBB68;
+    --edge: #481B1B;
+    --glow: rgba(180, 30, 30, 0.45);
+    --overlay-bg: radial-gradient(circle at center, #3a1212 0%, #140606 55%, #000 100%);
+    --header-bg: 40, 8, 10;
+    --bg-player-card:     url("assets/images/backgrounds/ottoman/playercard-bg-turkey.png");
+    --bg-opponent-card:   url("assets/images/backgrounds/carthaginian/playercard-bg-carthage.png");
+    --bg-player-name:     url("assets/images/backgrounds/ottoman/namecard-bg-turkey.png");
+    --bg-opponent-name:   url("assets/images/backgrounds/carthaginian/namecard-bg-carthage.png");
+    --icon-draw:          url("assets/images/icons/draw-ottoman.png");
+    --icon-resign:        url("assets/images/icons/btn-flag-ottoman.png");
+    --bg-lobby:           url("assets/images/lobby/ottoman-lobby.png");
+}
+
+body[data-empire="roman"] {
+    --bg-page: url("assets/images/backgrounds/roman/roman-background.jpg");
+    --bg-move-history: url("assets/images/backgrounds/roman/move-history-bg-roman.png");
+    --accent: #c9a24b;
+    --accent-bright: #e8c15a;
+    --edge: #5a1a1a;
+    --glow: rgba(200, 40, 40, 0.45);
+    --overlay-bg: radial-gradient(circle at center, #3d1710 0%, #170907 55%, #000 100%);
+    --header-bg: 44, 10, 10;
+    --bg-player-card:     url("assets/images/backgrounds/roman/playercard-bg-roman.png");
+    --bg-opponent-card:   url("assets/images/backgrounds/carthaginian/playercard-bg-carthage.png");
+    --bg-player-name:     url("assets/images/backgrounds/roman/namecard-bg-roman.png");
+    --bg-opponent-name:   url("assets/images/backgrounds/carthaginian/namecard-bg-carthage.png");
+    --icon-draw:          url("assets/images/icons/draw-ottoman.png");
+    --icon-resign:        url("assets/images/icons/btn-flag-ottoman.png");
+    --bg-lobby:           url("assets/images/lobby/roman-lobby.png");
+}
+
+body[data-empire="carthaginian"] {
+    --bg-page: url("assets/images/backgrounds/carthaginian/carthaginian-background.jpg");
+    --bg-move-history: url("assets/images/backgrounds/carthaginian/move-history-bg-carthaginian.png");
+    --accent: #d4a85a;
+    --accent-bright: #f4d58a;
+    --edge: #3a1f4a;
+    --glow: rgba(212, 168, 90, 0.45);
+    --overlay-bg: radial-gradient(circle at center, #493713 0%, #1b1407 55%, #000 100%);
+    --header-bg: 30, 16, 44;
+    --bg-player-card:     url("assets/images/backgrounds/carthaginian/playercard-bg-carthage.png");
+    --bg-opponent-card:   url("assets/images/backgrounds/roman/playercard-bg-roman.png");
+    --bg-player-name:     url("assets/images/backgrounds/carthaginian/namecard-bg-carthage.png");
+    --bg-opponent-name:   url("assets/images/backgrounds/roman/namecard-bg-roman.png");
+    --icon-draw:          url("assets/images/icons/draw-ottoman.png");
+    --icon-resign:        url("assets/images/icons/btn-flag-ottoman.png");
+    --text-color: #000000;
+    --bg-lobby:           url("assets/images/lobby/carthaginian-lobby.png");
+}
+
+body[data-empire="carthaginian"] #lobby-empty,
+body[data-empire="carthaginian"] #lobby-status,
+body[data-empire="carthaginian"] li,
+body[data-empire="carthaginian"] .profile span,
+body[data-empire="carthaginian"] .profile span p {
+    color: var(--text-color);
+}
+
+body[data-empire="egyptian"] {
+    --bg-page: url("assets/images/backgrounds/egyptian/egyptian-background.jpg");
+    --bg-move-history: url("assets/images/backgrounds/egyptian/move-history-bg-egyptian.png");
+    --accent: #d4b44a;
+    --accent-bright: #ecd070;
+    --edge: #5a4010;
+    --glow: rgba(212, 170, 80, 0.45);
+    --overlay-bg: radial-gradient(circle at center, #40320e 0%, #171205 55%, #000 100%);
+    --header-bg: 30, 18, 8;
+    --bg-player-card:     url("assets/images/backgrounds/egyptian/playercard-bg-egyptian.png");
+    --bg-opponent-card:   url("assets/images/backgrounds/carthaginian/playercard-bg-carthage.png");
+    --bg-player-name:     url("assets/images/backgrounds/egyptian/namecard-bg-egyptian.png");
+    --bg-opponent-name:   url("assets/images/backgrounds/carthaginian/namecard-bg-carthage.png");
+    --icon-draw:          url("assets/images/icons/draw-ottoman.png");
+    --icon-resign:        url("assets/images/icons/btn-flag-ottoman.png");
+    --bg-lobby:           url("assets/images/lobby/egypt-lobby.png");
+}
+
+body[data-empire="andalus"] {
+    --bg-page: url("assets/images/backgrounds/andalus/andalus-background.jpg");
+    --bg-move-history: url("assets/images/backgrounds/andalus/move-history-bg-andalus.png");
+    --accent: #3d9a5a;
+    --accent-bright: #5fc77f;
+    --edge: #123019;
+    --glow: rgba(60, 190, 100, 0.45);
+    --overlay-bg: radial-gradient(circle at center, #12351e 0%, #07160b 55%, #000 100%);
+    --header-bg: 18, 48, 25;
+    --bg-player-card:     url("assets/images/backgrounds/andalus/playercard-bg-andalus.png");
+    --bg-opponent-card:   url("assets/images/backgrounds/carthaginian/playercard-bg-carthage.png");
+    --bg-player-name:     url("assets/images/backgrounds/andalus/namecard-bg-andalus.png");
+    --bg-opponent-name:   url("assets/images/backgrounds/carthaginian/namecard-bg-carthage.png");
+    --icon-draw:          url("assets/images/icons/draw-andalus.png");
+    --icon-resign:        url("assets/images/icons/btn-flag-andalus.png");
+    --bg-lobby:           url("assets/images/lobby/andalus-lobby.png");
+}
+
+body{
+    margin: 0;
+}
+
+*{
+    box-sizing: border-box;
+}
+
+html {
+  font-size: clamp(14px, 0.98vw, 24px);
+}
+
+header {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  align-items: center;
+  gap: 15rem;
+  margin: 0;                          /* was 0 3rem */
+  padding: 1rem 4rem;                 /* old 3rem margin + 1rem padding */
+  background: rgba(var(--header-bg), 0.3);
+  border-bottom: 1px solid var(--accent);
+}
+
+@font-face {
+    font-family: "sora";
+    src: url("assets/fonts/Sora-VariableFont_wght.ttf") format("truetype");
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+body {
+    font-family: "sora", sans-serif;
+    background-color: #0b0b0b;
+    background-image: var(--bg-page);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.logo{
+    justify-self: start;
+}
+
+.logo img{
+    width: 11.25rem;
+}
+
+.header-buttons{
+    display: flex;
+    justify-content: center;
+    gap: 1.25rem;
+    align-items: center;
+    transform: translateY(0.5rem);
+}
+
+.header-buttons p{
+    color: var(--accent-bright);
+}
+
+.button p{
+    margin: 0.5rem 0 0;
+    color: var(--accent-bright);
+    transition: color .3s;
+}
+.button:hover p{ color: #f5d589; }
+
+.button{
+    display: flex;
+    position: relative; 
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    color: var(--accent);
+    text-decoration: none;
+    isolation: isolate;
+}
+
+.button::before{
+  content: "";
+  position: absolute; inset: 0;
+  background: radial-gradient(circle at 50% 40%, var(--glow), transparent 70%);
+  opacity: 0;
+  transition: opacity .35s;
+  z-index: -1;
+  height: 120%;
+}
+.button:hover::before {
+    opacity: 1;
+
+}
+.button:hover p,
+.button.clicked p{
+    text-decoration-line: underline;
+    text-decoration-color: var(--accent-bright); /* Blue underline */
+    text-decoration-style: solid;     /* solid, double, dotted, dashed, wavy */
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.375rem;
+}
+.button.clicked::before { opacity: 1; }
+
+.button button{
+    cursor: inherit;
+}
+
+.empire-button, .puzzle-button, .stats-button, .home-button{
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: transparent;
+    width: 1.875rem;
+    height: 1.875rem;
+    border: none;
+}
+.home-button   { background-image: var(--icon-home); }
+.empire-button { background-image: var(--icon-empire); }
+.puzzle-button { background-image: var(--icon-puzzles); }
+.stats-button  { background-image: var(--icon-stats); }
+
+.profile {
+  justify-self: end;
+  display: flex;
+  align-items: center;
+  gap: 0.3125rem;
+}
+
+.profile span{
+    display: flex;
+    flex-direction: column;
+    gap: 0.3125rem;
+    color: white;
+    font-size: 0.75rem;
+}
+
+.profile span p{
+    margin: 0;
+}
+
+h1{
+    color: var(--gold);
+    font-weight: 700;
+    font-size: 2.5rem;
+}
+
+main{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1.5rem 0;
+}
+
+#lobby-empty,
+#lobby-status{
+    color: white;
+}
+
+.lobby-create {
+    display: flex;
+    align-items: stretch;
+    gap: 0.625rem;
+    width: min(44rem, calc(100% - 2rem));
+}
+
+#lobby-name {
+    flex: 1 1 auto;
+    min-width: 0;
+    height: 3rem;
+    padding: 0 1rem;
+    border: 1px solid var(--accent);
+    border-radius: 3px;
+    outline: none;
+    background: rgba(8, 8, 8, 0.82);
+    color: #fff;
+    font: inherit;
+    transition: border-color 160ms ease, box-shadow 160ms ease, background 160ms ease;
+}
+
+#lobby-name::placeholder {
+    color: rgba(255, 255, 255, 0.58);
+}
+
+#lobby-name:focus-visible {
+    border-color: var(--accent-bright);
+    background: rgba(8, 8, 8, 0.96);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 35%, transparent);
+}
+
+#lobby-create,
+#lobby-cancel {
+    min-height: 3rem;
+    padding: 0.65rem 1.1rem;
+    border: 1px solid var(--accent-bright);
+    border-radius: 3px;
+    font: inherit;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 160ms ease, color 160ms ease, transform 160ms ease;
+}
+
+#lobby-create {
+    background: var(--accent);
+    color: #160d05;
+}
+
+#lobby-create:hover {
+    background: var(--accent-bright);
+    transform: translateY(-1px);
+}
+
+#lobby-cancel {
+    background: rgba(0, 0, 0, 0.55);
+    color: var(--accent-bright);
+}
+
+#lobby-cancel:hover {
+    background: var(--accent-bright);
+    color: #160d05;
+}
+
+#lobby-create:focus-visible,
+#lobby-cancel:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 3px;
+}
+
+li{
+    color: white;
+}
+
+#lobby-list {
+    display: grid;
+    gap: 0.75rem;
+    width: min(44rem, calc(100% - 2rem));
+    margin: 1rem 0;
+    padding: 0;
+    list-style: none;
+}
+
+.lobby-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--accent);
+    background: rgba(0, 0, 0, 0.55);
+}
+
+.lobby-player {
+    display: flex;
+    align-items: center;
+    gap: 0.875rem;
+    min-width: 0;
+}
+
+.lobby-avatar {
+    flex: 0 0 auto;
+    width: 3.5rem;
+    height: 3.5rem;
+    border: 1px solid var(--accent-bright);
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.lobby-details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+
+.lobby-details strong {
+    font-size: 1rem;
+}
+
+.lobby-details span {
+    color: var(--accent-bright);
+    font-size: 0.8rem;
+}
+
+.lobby-presence {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.2rem;
+    min-width: 0;
+    text-align: center;
+}
+
+.lobby-waiting {
+    color: var(--accent-bright);
+    font-size: 0.8rem;
+}
+
+.lobby-player-count {
+    color: var(--accent-bright);
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+.lobby-join {
+    flex: 0 0 auto;
+    margin-left: auto;
+    padding: 0.55rem 1rem;
+    border: 1px solid var(--accent-bright);
+    background: var(--accent);
+    color: #160d05;
+    font: inherit;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.lobby-join:hover {
+    background: var(--accent-bright);
+}
+
+@media (max-width: 520px) {
+    .lobby-create {
+        flex-wrap: wrap;
+    }
+
+    #lobby-name {
+        flex-basis: 100%;
+    }
+
+    #lobby-create,
+    #lobby-cancel {
+        flex: 1 1 8rem;
+    }
+}
+
+#intro-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    text-align: center;
+    color: var(--accent-bright);
+    /* themed glow in the middle fading to black at the edges */
+    background: var(--overlay-bg);
+
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 2s;
+}
+
+#intro-overlay.show {
+    opacity: 1;
+    pointer-events: all;
+}
+
+#intro-overlay.leaving {
+    opacity: 0;
+    transition: opacity 0.7s;
+}
+
+#intro-overlay h1 {
+    margin: 0;
+    font-size: 3.5rem;
+    letter-spacing: 0.5rem;
+    text-transform: uppercase;
+    text-shadow: 0 0 20px rgba(212, 168, 90, 0.5);
+}
+
+#intro-matchup {
+    margin: 0;
+    font-size: 1.1rem;
+    letter-spacing: 0.3rem;
+    text-transform: uppercase;
+    color: var(--accent);
+    opacity: 0.8;
+}
+
+#intro-overlay .divider {
+    width: 12rem;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+}
+
+#intro-count {
+    margin: 0;
+    font-size: 6rem;
+    font-weight: 700;
+}
+
+/* each number "pops" in */
+#intro-count.pop { animation: pop 0.8s ease-out; }
+
+@keyframes pop {
+    from { transform: scale(1.6); opacity: 0; }
+    to   { transform: scale(1);   opacity: 1; }
+}
+
+/* text fades away just before the page changes */
+#intro-overlay.leaving > * {
+    opacity: 0;
+    transition: opacity 0.6s;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+li{
+    background-image: var(--bg-lobby);
+    background-position: center;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    padding: 2rem;
+    width: calc(100vw - 50rem);
+    height: 7rem;
+    list-style: none;
+    display: flex;
+    align-items: center;
+}

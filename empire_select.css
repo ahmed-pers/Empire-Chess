@@ -34,7 +34,7 @@
   --glow: rgba(180, 30, 30, 0.45);
   --overlay-bg: radial-gradient(circle at center, #3a1212 0%, #140606 55%, #000 100%);
 
-  --header-bg{ --header-bg: 40, 8, 10; };
+  --header-bg: 40, 8, 10;
 }
 body[data-empire="ottoman"]       { --header-bg: 40, 8, 10; }
 body[data-empire="roman"]       { --header-bg: 44, 10, 10; }
@@ -342,73 +342,6 @@ main{
 /* scale the avatar + arrow that have fixed sizes inline in the HTML */
 .profile > img:first-child { width: 3.125rem !important; height: 3.125rem !important; }
 .profile > img:last-child  { width: 1.125rem !important; height: 0.9375rem !important; }
-
-#intro-overlay {
-    position: fixed;
-    inset: 0;
-    z-index: 1000;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 1rem;
-    text-align: center;
-    color: var(--accent-bright);
-    /* themed glow in the middle fading to black at the edges */
-    background: var(--overlay-bg);
-
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 2s;
-}
-
-#intro-overlay.show {
-    opacity: 1;
-    pointer-events: all;
-}
-
-#intro-overlay h1 {
-    margin: 0;
-    font-size: 3.5rem;
-    letter-spacing: 0.5rem;
-    text-transform: uppercase;
-    text-shadow: 0 0 20px rgba(212, 168, 90, 0.5);
-}
-
-#intro-matchup {
-    margin: 0;
-    font-size: 1.1rem;
-    letter-spacing: 0.3rem;
-    text-transform: uppercase;
-    color: var(--accent);
-    opacity: 0.8;
-}
-
-#intro-overlay .divider {
-    width: 12rem;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, var(--accent), transparent);
-}
-
-#intro-count {
-    margin: 0;
-    font-size: 6rem;
-    font-weight: 700;
-}
-
-/* each number "pops" in */
-#intro-count.pop { animation: pop 0.8s ease-out; }
-
-@keyframes pop {
-    from { transform: scale(1.6); opacity: 0; }
-    to   { transform: scale(1);   opacity: 1; }
-}
-
-/* text fades away just before the page changes */
-#intro-overlay.leaving > * {
-    opacity: 0;
-    transition: opacity 0.6s;
-}
 
 .empire-preview {
   position: fixed;
