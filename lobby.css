@@ -565,3 +565,26 @@ li{
     display: flex;
     align-items: center;
 }
+
+.dancing-gif {
+  position: fixed;
+  right: 10%;
+  top: 40%;
+  transform: translateY(-50%);
+  width: 12rem;
+  opacity: 0;
+  transition: opacity 1.5s;
+  pointer-events: none;
+  z-index: 50;
+
+  /* fade all four edges to transparent */
+  mask-image:
+    linear-gradient(to right,  transparent, #000 25%, #000 75%, transparent),
+    linear-gradient(to bottom, transparent, #000 25%, #000 75%, transparent);
+  mask-composite: intersect;
+  -webkit-mask-composite: source-in;
+}
+
+.dancing-gif.show {
+  opacity: 0.5;
+}

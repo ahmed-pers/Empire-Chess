@@ -7,6 +7,13 @@ const introCount = document.getElementById("intro-count");
 const startAudio = document.getElementById("start-audio");
 const fadeBattleIntroOnGame = sessionStorage.getItem("fadeBattleIntroOnGame") === "1";
 const selectedEmpire = sessionStorage.getItem("empire") || localStorage.getItem("selectedEmpire") || "ottoman";
+const empireNames = {
+  ottoman: "Ottoman",
+  roman: "Roman",
+  carthaginian: "Carthaginian",
+  egyptian: "Egyptian",
+  andalus: "Andalus"
+};
 
 document.body.dataset.empire = selectedEmpire;
 
@@ -97,8 +104,13 @@ function startBattleIntro() {
 socket.emit("joinGame", { gameId, playerId });
 
 socket.on("gameJoined", ({ color, white, black }) => {
-  // you now know your color and both empires:
-  // apply the themes, flip the board if color === "black", etc.
+  const playerEmpire = color === "white" ? white : black;
+  const opponentEmpire = color === "white" ? black : white;
+  applyGameVisuals(playerEmpire, opponentEmpire);
+  const playerName = document.getElementById("player-name");
+  const opponentName = document.getElementById("opponent-name");
+  if (playerName) playerName.textContent = empireNames[playerEmpire] || playerEmpire;
+  if (opponentName) opponentName.textContent = empireNames[opponentEmpire] || opponentEmpire;
   console.log("I am", color, "| white:", white, "| black:", black);
 
   if (fadeBattleIntroOnGame && introOverlay) {

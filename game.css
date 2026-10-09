@@ -380,7 +380,7 @@ main{
 .player-card   { background: var(--bg-player-card)   center / 100% 100% no-repeat; }
 .opponent-card { background: var(--bg-opponent-card) center / 100% 100% no-repeat; }
 
-body[data-empire="carthaginian"] .opponent-card {
+body[data-opponent-empire="carthaginian"] .opponent-card {
     filter: saturate(0.68) brightness(1.16) opacity(0.88);
 }
 

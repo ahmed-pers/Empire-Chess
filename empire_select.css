@@ -419,3 +419,26 @@ body[data-empire="andalus"] {
   --glow: rgba(60, 190, 100, 0.45);
   --overlay-bg: radial-gradient(circle at center, #0f3a1c 0%, #05140a 55%, #000 100%);
 }
+
+.dancing-gif {
+  position: fixed;
+  right: 50%;
+  top: 30%;
+  transform: translateY(-50%);
+  width: 12rem;
+  opacity: 0;
+  transition: opacity 1.5s;
+  pointer-events: none;
+  z-index: 50;
+
+  /* fade all four edges to transparent */
+  mask-image:
+    linear-gradient(to right,  transparent, #000 25%, #000 75%, transparent),
+    linear-gradient(to bottom, transparent, #000 25%, #000 75%, transparent);
+  mask-composite: intersect;
+  -webkit-mask-composite: source-in;
+}
+
+.dancing-gif.show {
+  opacity: 0.5;
+}
