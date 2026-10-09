@@ -105,7 +105,7 @@ const EMPIRE_INFO = {
   },
   ottoman: {
     name: "Ottoman",
-    description: "An empire centered in Anatolia that captured Constantinople in 1453."
+    description: "Constantinople, either i conquer you, or you conquer me ..."
   },
   roman: {
     name: "Roman",
