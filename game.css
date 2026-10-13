@@ -5,7 +5,7 @@
 
   /* ---------- Theme images (default theme: Ottoman vs Carthage) ---------- */
   --bg-page:            url("assets/images/backgrounds/ottoman/ottoman-background.jpg");
-    --bg-move-history:    url("assets/images/backgrounds/ottoman/move-history-bg-ottoman.png");
+  --bg-move-history:    url("assets/images/backgrounds/ottoman/move-history-bg-ottoman.png");
 
   --bg-player-card:     url("assets/images/backgrounds/ottoman/playercard-bg-turkey.png");
   --bg-opponent-card:   url("assets/images/backgrounds/carthaginian/playercard-bg-carthage.png");
@@ -33,7 +33,9 @@
   --edge: #481B1B;
   --glow: rgba(180, 30, 30, 0.45);
   --overlay-bg: radial-gradient(circle at center, #3a1212 0%, #140606 55%, #000 100%);
-    --header-bg: 40, 8, 10;
+  --header-bg: 40, 8, 10;
+  --bg-light-square: #4A241F;
+  --bg-dark-square: #1A0C0C;
 }
 
 body[data-empire="ottoman"] {
@@ -50,6 +52,9 @@ body[data-empire="ottoman"] {
     --bg-opponent-name:   url("assets/images/backgrounds/carthaginian/namecard-bg-carthage.png");
     --icon-draw:          url("assets/images/icons/draw-ottoman.png");
     --icon-resign:        url("assets/images/icons/btn-flag-ottoman.png");
+    --bg-light-square: #49241E;
+    --bg-dark-square: #170C0A;
+    --white-piece-filter: sepia(0.82) saturate(1.75) hue-rotate(4deg) brightness(0.92) contrast(1.02);
 }
 
 body[data-empire="roman"] {
@@ -66,6 +71,9 @@ body[data-empire="roman"] {
     --bg-opponent-name:   url("assets/images/backgrounds/carthaginian/namecard-bg-carthage.png");
     --icon-draw:          url("assets/images/icons/draw-ottoman.png");
     --icon-resign:        url("assets/images/icons/btn-flag-ottoman.png");
+    --bg-light-square: #611D1F;
+    --bg-dark-square: #1D0708;
+    --white-piece-filter: sepia(0.5) saturate(2.3) hue-rotate(316deg) brightness(1.04) contrast(1.14);
 }
 
 body[data-empire="carthaginian"] {
@@ -82,6 +90,9 @@ body[data-empire="carthaginian"] {
     --bg-opponent-name:   url("assets/images/backgrounds/roman/namecard-bg-roman.png");
     --icon-draw:          url("assets/images/icons/draw-ottoman.png");
     --icon-resign:        url("assets/images/icons/btn-flag-ottoman.png");
+    --bg-light-square: #B6A170;
+    --bg-dark-square: #DBD3B8;
+    --white-piece-filter: sepia(0.42) saturate(2.2) hue-rotate(232deg) brightness(1.1) contrast(1.08);
 }
 
 body[data-empire="egyptian"] {
@@ -98,6 +109,9 @@ body[data-empire="egyptian"] {
     --bg-opponent-name:   url("assets/images/backgrounds/carthaginian/namecard-bg-carthage.png");
     --icon-draw:          url("assets/images/icons/draw-ottoman.png");
     --icon-resign:        url("assets/images/icons/btn-flag-ottoman.png");
+    --bg-light-square: #2B3664;
+    --bg-dark-square: #0C1023;
+    --white-piece-filter: sepia(0.58) saturate(2) hue-rotate(154deg) brightness(1.12) contrast(1.08);
 }
 
 body[data-empire="andalus"] {
@@ -114,7 +128,16 @@ body[data-empire="andalus"] {
     --bg-opponent-name:   url("assets/images/backgrounds/carthaginian/namecard-bg-carthage.png");
     --icon-draw:          url("assets/images/icons/draw-andalus.png");
     --icon-resign:        url("assets/images/icons/btn-flag-andalus.png");
+    --bg-light-square: #25482E;
+    --bg-dark-square: #0B170E;
+    --white-piece-filter: sepia(0.62) saturate(1.9) hue-rotate(66deg) brightness(1.08) contrast(1.08);
 }
+
+body[data-opponent-empire="ottoman"] { --black-piece-filter: sepia(0.82) saturate(1.75) hue-rotate(4deg) brightness(0.88) contrast(1.12); }
+body[data-opponent-empire="roman"] { --black-piece-filter: sepia(0.5) saturate(2.3) hue-rotate(316deg) brightness(0.84) contrast(1.2); }
+body[data-opponent-empire="carthaginian"] { --black-piece-filter: sepia(0.42) saturate(2.2) hue-rotate(232deg) brightness(0.9) contrast(1.16); }
+body[data-opponent-empire="egyptian"] { --black-piece-filter: sepia(0.58) saturate(2) hue-rotate(154deg) brightness(0.9) contrast(1.16); }
+body[data-opponent-empire="andalus"] { --black-piece-filter: sepia(0.62) saturate(1.9) hue-rotate(66deg) brightness(0.86) contrast(1.16); }
 
 *{
     box-sizing: border-box;
@@ -350,7 +373,8 @@ main{
     padding-right: 3.125rem;
 }
 
-.content-center img{
+.content-center > img{
+    display: block;
     height: calc(100vh - 10.625rem);     /* replaces height: 90% */
     width: auto;
     filter: drop-shadow(0 0 1px #000);
@@ -550,4 +574,95 @@ body[data-empire="carthaginian"] .move-history {
 @keyframes fadeIn {
     from { opacity: 1; }
     to   { opacity: 0; }
+}
+
+.content-center{
+    position: relative;
+    display: inline-block;
+}
+
+.array-chess-board{
+    position: absolute;
+    width: auto;
+    height: 100%;
+    top: 0.3125rem;   /* Match top padding */
+    left: 3.125rem;   /* Match left padding */
+    right: 3.125rem;  /* Match right padding */
+    color: white;
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    grid-template-rows: repeat(8, 1fr);
+    padding: 2.3rem;
+}
+
+.array-chess-board div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.chess-piece{
+    display: block;
+    object-fit: contain;
+    pointer-events: none;
+    user-select: none;
+}
+
+.light-square{
+    background-color: var(--bg-light-square);
+}
+
+.dark-square{
+    background-color: var(--bg-dark-square);
+}
+
+.chess-piece {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+}
+
+.white-piece {
+    filter: var(--white-piece-filter, none);
+}
+
+.black-piece {
+    filter: var(--black-piece-filter, none);
+}
+
+.array-chess-board > div{
+    position: relative;
+}
+
+.array-chess-board .selected {
+    background: rgba(255, 235, 60, 0.45);
+}
+
+.array-chess-board .move-target::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 30%;
+    height: 30%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.25);
+    pointer-events: none;        /* clicks go through to the square */
+}
+
+.array-chess-board .move-target.capture::after {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transform: none;
+    background: transparent;
+    border: 0.35rem solid rgba(0, 0, 0, 0.25);
+    box-sizing: border-box;
+}
+
+.chess-piece {
+    position: relative;   /* lets z-index work, so the moving piece is drawn above the others */
 }

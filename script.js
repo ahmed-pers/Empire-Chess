@@ -177,3 +177,6 @@ function applyTheme(empire) {
 }
 
 selectEmpire(document.querySelector('.empire-card[data-empire="ottoman"]'));
+
+const defaultCard = document.querySelector('.empire-card[data-empire="ottoman"]');
+if (defaultCard) selectEmpire(defaultCard);
