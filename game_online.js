@@ -10,6 +10,7 @@ const selectedEmpire = sessionStorage.getItem("empire") || localStorage.getItem(
 let myColor = "white";
 let currentState = null;     // the last gameState from the server
 let selectedSquare = null;   // e.g. "e2", or null
+let ottomanAbilityMode = false;
 const empireNames = {
   ottoman: "Ottoman",
   roman: "Roman",
@@ -110,6 +111,7 @@ socket.on("gameJoined", ({ color, white, black }) => {
   myColor = color;
   const playerEmpire = color === "white" ? white : black;
   const opponentEmpire = color === "white" ? black : white;
+  document.getElementById("ottoman-ability-control").hidden = playerEmpire !== "ottoman";
   applyGameVisuals(playerEmpire, opponentEmpire);
   const playerName = document.getElementById("player-name");
   const opponentName = document.getElementById("opponent-name");
@@ -134,8 +136,15 @@ socket.on("opponentDisconnected", () => console.log("opponent left"));
 socket.on("errorMsg", (msg) => alert(msg));
 
 const chessBoardOverlay = document.querySelector('.array-chess-board');
+const ottomanAbilityButton = document.getElementById("ottoman-ability-btn");
 const moveSound = new Audio("assets/music/move-self.mp3");
 const captureSound = new Audio("assets/music/capture.mp3");
+const abilitySound = new Audio("assets/music/start.mp3");
+const ottomanAbilitySound = new Audio("assets/abilities/ottoman.mp3");
+const abilitySounds = [abilitySound, ottomanAbilitySound];
+const abilityBannerDuration = 3200;
+let abilitySoundFadeTimer = null;
+let abilitySoundFadeFrame = null;
 
 const files = "abcdefgh";
 const pieceNames = { p: "pawn", n: "knight", b: "bishop", r: "rook", q: "queen", k: "king" };
@@ -196,7 +205,11 @@ socket.on("gameState", (state) => {
   currentState = state;
   selectedSquare = null;
   renderBoard(state.fen, myColor);
-  if (positionChanged && state.lastMove) {
+  if (ottomanAbilityMode && (!state.ottomanAbilityAvailable || state.turn !== myColor)) {
+    ottomanAbilityMode = false;
+  }
+  updateOttomanAbilityButton();
+  if (positionChanged && state.lastMove && !state.lastMove.ability) {
     const sound = state.lastMove.captured ? captureSound : moveSound;
     sound.currentTime = 0;
     sound.play().catch(() => {});
@@ -207,8 +220,25 @@ socket.on("gameState", (state) => {
 function showSelection() {
   chessBoardOverlay.querySelectorAll(".selected, .move-target, .capture")
   .forEach((el) => el.classList.remove("selected", "move-target", "capture"));
+  chessBoardOverlay.querySelectorAll(".ability-rook, .ability-target")
+    .forEach((el) => el.classList.remove("ability-rook", "ability-target"));
   chessBoardOverlay.querySelectorAll(".selected, .move-target")
     .forEach((el) => el.classList.remove("selected", "move-target"));
+
+  if (ottomanAbilityMode) {
+    const abilityTargets = currentState.ottomanAbilityTargets || {};
+    Object.keys(abilityTargets).forEach((square) => {
+      chessBoardOverlay.querySelector(`[data-square="${square}"]`).classList.add("ability-rook");
+    });
+    if (selectedSquare && abilityTargets[selectedSquare]) {
+      chessBoardOverlay.querySelector(`[data-square="${selectedSquare}"]`).classList.add("selected");
+      abilityTargets[selectedSquare].forEach((square) => {
+        chessBoardOverlay.querySelector(`[data-square="${square}"]`).classList.add("ability-target");
+      });
+    }
+    return;
+  }
+
   if (!selectedSquare) return;
 
   chessBoardOverlay.querySelector(`[data-square="${selectedSquare}"]`).classList.add("selected");
@@ -221,6 +251,22 @@ function showSelection() {
   }
 }
 
+function updateOttomanAbilityButton() {
+  const available = currentState?.ottomanAbilityAvailable && currentState.turn === myColor;
+  const usesRemaining = currentState?.ottomanAbilityUsesRemaining ?? 0;
+  ottomanAbilityButton.disabled = !available && !ottomanAbilityMode;
+  ottomanAbilityButton.classList.toggle("active", ottomanAbilityMode);
+  ottomanAbilityButton.textContent = ottomanAbilityMode ? "Cancel" : `Use (${usesRemaining})`;
+}
+
+ottomanAbilityButton.addEventListener("click", () => {
+  if (!currentState?.ottomanAbilityAvailable || currentState.turn !== myColor) return;
+  ottomanAbilityMode = !ottomanAbilityMode;
+  selectedSquare = null;
+  updateOttomanAbilityButton();
+  showSelection();
+});
+
 chessBoardOverlay.addEventListener("click", (e) => {
   console.log("click", e.target, currentState?.turn, myColor);
   if (!currentState || currentState.turn !== myColor) return;   // not my turn
@@ -228,6 +274,22 @@ chessBoardOverlay.addEventListener("click", (e) => {
   const squareEl = e.target.closest("[data-square]");
   if (!squareEl) return;
   const sq = squareEl.dataset.square;
+
+  if (ottomanAbilityMode) {
+    const abilityTargets = currentState.ottomanAbilityTargets || {};
+    if (selectedSquare && abilityTargets[selectedSquare]?.includes(sq)) {
+      socket.emit("ottomanAbilityCapture", { from: selectedSquare, to: sq });
+      ottomanAbilityMode = false;
+      selectedSquare = null;
+      updateOttomanAbilityButton();
+      showSelection();
+      return;
+    }
+
+    selectedSquare = abilityTargets[sq] ? sq : null;
+    showSelection();
+    return;
+  }
 
   // a piece is selected and I clicked one of its legal targets: send the move
   if (selectedSquare && currentState.legalMoves[selectedSquare]?.includes(sq)) {
@@ -267,3 +329,57 @@ function slidePiece(fromSq, toSq) {
     piece.style.zIndex = "";
   }, { once: true });
 }
+
+function showAbilityBanner(imageSrc) {
+  const overlay = document.getElementById('ability-overlay');
+  document.getElementById('ability-img').src = imageSrc;
+
+  overlay.classList.remove('play');
+  void overlay.offsetWidth;          // restarts the animation if it's triggered twice
+  overlay.classList.add('play');
+}
+
+function playAbilitySounds() {
+  clearTimeout(abilitySoundFadeTimer);
+  if (abilitySoundFadeFrame !== null) cancelAnimationFrame(abilitySoundFadeFrame);
+
+  abilitySounds.forEach((sound) => {
+    sound.pause();
+    sound.currentTime = 0;
+    sound.volume = 1;
+    sound.play().catch(() => {});
+  });
+
+  abilitySoundFadeTimer = setTimeout(() => {
+    const fadeStartedAt = performance.now();
+    const startingVolumes = abilitySounds.map((sound) => sound.volume);
+    const fadeDuration = abilityBannerDuration * 0.2;
+
+    const fadeFrame = (now) => {
+      const progress = Math.min((now - fadeStartedAt) / fadeDuration, 1);
+      abilitySounds.forEach((sound, index) => {
+        sound.volume = startingVolumes[index] * (1 - progress);
+      });
+
+      if (progress < 1) {
+        abilitySoundFadeFrame = requestAnimationFrame(fadeFrame);
+      } else {
+        abilitySounds.forEach((sound) => sound.pause());
+        abilitySoundFadeFrame = null;
+      }
+    };
+
+    abilitySoundFadeFrame = requestAnimationFrame(fadeFrame);
+  }, abilityBannerDuration * 0.8);
+}
+
+document.getElementById('ability-overlay').addEventListener('animationend', (e) => {
+  if (e.animationName === 'bombard-slide') {
+    document.getElementById('ability-overlay').classList.remove('play');
+  }
+});
+
+socket.on('abilityUsed', ({ ability }) => {
+  playAbilitySounds();
+  showAbilityBanner(`assets/abilities/${ability}.png`);
+});

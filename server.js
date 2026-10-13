@@ -12,8 +12,63 @@ app.use(express.static(__dirname));
 const lobbies = {};
 const games = {};
 let nextId = 1;
+const MAX_OTTOMAN_ABILITY_USES = 2;
 
 const waiting = () => Object.values(lobbies).map((l) => ({ id: l.id, name: l.name, empire: l.empire}));
+
+function ottomanAbilityTargets(game, color) {
+    const colorCode = color === "white" ? "w" : "b";
+    if (game[color].empire !== "ottoman" || game.ottomanAbilityUses[color] >= MAX_OTTOMAN_ABILITY_USES || game.chess.turn() !== colorCode) return {};
+
+    const board = game.chess.board();
+    const targets = {};
+    const directions = [[1, 0], [-1, 0], [0, 1], [0, -1]];
+
+    const keepsKingSafe = (square) => {
+        const simulation = new Chess(game.chess.fen());
+        simulation.remove(square);
+        return !simulation.isCheck();
+    };
+
+    for (let row = 0; row < 8; row++) {
+        for (let col = 0; col < 8; col++) {
+            const rook = board[row][col];
+            if (!rook || rook.type !== "r" || rook.color !== colorCode) continue;
+
+            const from = "abcdefgh"[col] + (8 - row);
+            const rookTargets = [];
+            for (const [rowStep, colStep] of directions) {
+                let targetRow = row + rowStep;
+                let targetCol = col + colStep;
+
+                while (targetRow >= 0 && targetRow < 8 && targetCol >= 0 && targetCol < 8) {
+                    const piece = board[targetRow][targetCol];
+                    const to = "abcdefgh"[targetCol] + (8 - targetRow);
+                    if (!piece) {
+                        targetRow += rowStep;
+                        targetCol += colStep;
+                        continue;
+                    }
+
+                    if (piece.color === colorCode && piece.type === "p") {
+                        targetRow += rowStep;
+                        targetCol += colStep;
+                        continue;
+                    }
+
+                    if (piece.color !== colorCode && piece.type === "p" && keepsKingSafe(to)) {
+                        rookTargets.push(to);
+                    }
+                    break;
+                }
+            }
+
+            if (rookTargets.length) targets[from] = rookTargets;
+        }
+    }
+
+    return targets;
+}
 
 function stateOf(game) {
     const legalMoves = {};   // { e2: ["e3","e4"], g1: ["f3","h3"], ... }
@@ -21,12 +76,16 @@ function stateOf(game) {
         if (!legalMoves[m.from]) legalMoves[m.from] = [];
         if (!legalMoves[m.from].includes(m.to)) legalMoves[m.from].push(m.to);
     }
-    const last = game.chess.history({ verbose: true }).at(-1);
+    const turn = game.chess.turn() === "w" ? "white" : "black";
+    const abilityTargets = ottomanAbilityTargets(game, turn);
     return {
         fen: game.chess.fen(),
-        turn: game.chess.turn() === "w" ? "white" : "black",
+        turn,
         legalMoves,
-        lastMove: last ? { from: last.from, to: last.to, captured: Boolean(last.captured) } : null
+        lastMove: game.lastAction,
+        ottomanAbilityAvailable: Object.keys(abilityTargets).length > 0,
+        ottomanAbilityTargets: abilityTargets,
+        ottomanAbilityUsesRemaining: Math.max(0, MAX_OTTOMAN_ABILITY_USES - game.ottomanAbilityUses[turn])
     };
 }
 
@@ -54,7 +113,9 @@ io.on("connection", (socket) => {
         games[id] = {
             white: { playerId: lobby.playerId, empire: lobby.empire },
             black: { playerId, empire },
-            chess: new Chess()
+            chess: new Chess(),
+            lastAction: null,
+            ottomanAbilityUses: { white: 0, black: 0 }
         };
         io.to(lobby.socketId).emit("gameStart", { gameId: id });
         socket.emit("gameStart", { gameId: id });
@@ -92,11 +153,34 @@ io.on("connection", (socket) => {
         if (socket.color !== turn) return;           // not your turn
 
         try {
-            game.chess.move({ from, to, promotion: "q" });   // always queen for now
+            const move = game.chess.move({ from, to, promotion: "q" });   // always queen for now
+            game.lastAction = { from: move.from, to: move.to, captured: Boolean(move.captured) };
         } catch {
             return;                                  // illegal move: ignore
         }
         io.to(socket.gameId).emit("gameState", stateOf(game));
+    });
+
+    socket.on("ottomanAbilityCapture", ({ from, to }) => {
+        const game = games[socket.gameId];
+        if (!game || !socket.color) return;
+        const targets = ottomanAbilityTargets(game, socket.color);
+        if (!targets[from]?.includes(to)) return;
+
+        const captured = game.chess.remove(to);
+        if (!captured || captured.type !== "p") return;
+
+        const fen = game.chess.fen().split(" ");
+        fen[1] = socket.color === "white" ? "b" : "w";
+        fen[3] = "-";
+        fen[4] = "0";
+        if (socket.color === "black") fen[5] = String(Number(fen[5]) + 1);
+        game.chess.load(fen.join(" "));
+        game.ottomanAbilityUses[socket.color]++;
+        game.lastAction = { from, to, captured: true, ability: true };
+
+        io.to(socket.gameId).emit("gameState", stateOf(game));
+        io.to(socket.gameId).emit("abilityUsed", { ability: "ottoman" });
     });
 
     socket.on("disconnect", () => {

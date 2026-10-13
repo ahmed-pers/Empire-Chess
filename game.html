@@ -62,6 +62,9 @@
     
 
     <main>
+        <div id="ability-overlay" class="ability-overlay">
+            <img id="ability-img" alt="">
+        </div>
         <section class="sidebar-left">
             <div class="opponent-card">
                 <img id="opponent-flag" src="assets/images/flags/carthaginian_flag.png" alt="opponent flag" class="flag">
@@ -110,6 +113,10 @@
                 </span>
             </div>
             <div class="ingame-buttons">
+                <div id="ottoman-ability-control" class="button ability-control" hidden>
+                    <button id="ottoman-ability-btn" type="button" disabled>Use</button>
+                    <p>Siege Shot</p>
+                </div>
                 <div class="button">
                     <button id="drawBtn"></button>
                     <p>Draw</p>
